@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
+// import FixedMenu from "../components/FixedMenu.vue";
 // import ToDoList from "../views/ToDoList.vue";
 
 Vue.use(VueRouter);
@@ -24,6 +25,11 @@ const routes = [
     path: "/todolist",
     name: "todolist",
     component: () => import("../views/ToDoList.vue"),
+  },
+  {
+    path: "/fixedmenu",
+    name: "fixedmenu",
+    component: () => import("../components/FixedMenu.vue"),
   },
 ];
 
