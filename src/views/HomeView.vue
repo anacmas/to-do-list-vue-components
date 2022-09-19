@@ -1,70 +1,91 @@
 <template>
-  <div>
-    <template>
-      <v-card :loading="loading" class="mx-auto my-12" max-width="374">
-        <template slot="progress">
-          <v-progress-linear
-            color="deep-purple"
-            height="10"
-            indeterminate
-          ></v-progress-linear>
-        </template>
-        <v-img
-          height="250"
-          src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-        ></v-img>
-        <v-card-title>Cafe Badilico</v-card-title>
-        <v-card-text>
-          <v-row align="center" class="mx-0">
-            <v-rating
-              :value="4.5"
-              color="amber"
-              dense
-              half-increments
-              readonly
-              size="14"
-            ></v-rating>
-            <div class="grey--text ms-4">4.5 (413)</div>
-          </v-row>
-          <div class="my-4 text-subtitle-1">$ • Italian, Cafe</div>
-          <div>
-            Small plates, salads & sandwiches - an intimate setting with 12
-            indoor seats plus patio seating.
-          </div>
-        </v-card-text>
-        <v-divider class="mx-4"></v-divider>
-        <v-card-title>Tonight's availability</v-card-title>
-        <v-card-text>
-          <v-chip-group
-            v-model="selection"
-            active-class="deep-purple accent-4 white--text"
-            column
-          >
-            <v-chip>5:30PM</v-chip>
-            <v-chip>7:30PM</v-chip>
-            <v-chip>8:00PM</v-chip>
-            <v-chip>9:00PM</v-chip>
-          </v-chip-group>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn color="deep-purple lighten-2" text @click="reserve">
-            Reserve
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </template>
-  </div>
+  <v-container>
+    <!-- snackbar -->
+    <v-snackbar v-model="snackbar.show" :value="true" absolute left shaped top>
+      {{ snackbar.message }}
+    </v-snackbar>
+    <v-row class="text-center">
+      <v-col md="6" offset-md="3">
+        <v-card class="pa-4 rounded mt-6" outlined tile>
+          <h2>Login</h2>
+          <v-form v-model="valid">
+            <v-text-field
+              v-model="username"
+              label="Usuário"
+              required
+              outlined
+              append-icon="fa-user"
+              v-on:keyup.enter="login"
+            ></v-text-field>
+
+            <v-text-field
+              v-model="password"
+              label="Senha"
+              type="password"
+              required
+              outlined
+              append-icon="fa-key"
+              v-on:keyup.enter="login"
+            ></v-text-field>
+
+            <v-btn
+              :loading="loading"
+              :disabled="!valid"
+              color="secondary"
+              class="mr-4"
+              x-large
+              block
+              @click="login"
+              >Continuar <v-icon class="pl-3">fa-arrow-right</v-icon></v-btn
+            >
+          </v-form>
+          <p class="ma-4">
+            <span class="subtitle-1"
+              >Não tenho conta! Fazer <a href="">Cadastro</a></span
+            >
+          </p>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
+
 <script>
+import AuthApi from "../../api/auth.api.js";
 export default {
-  data: () => ({
-    loading: false,
-    selection: 1,
-  }),
+  data: () => {
+    return {
+      loading: false,
+      valid: false,
+      username: "",
+      password: "",
+      snackbar: {
+        show: false,
+        message: "",
+      },
+    };
+  },
   methods: {
-    reserve() {
+    login() {
       this.loading = true;
-      setTimeout(() => (this.loading = false), 2000);
+      AuthApi.login(this.username, this.password)
+        .then((user) => {
+          console.log("login ok", user);
+          this.saveLoggedUser(user);
+          this.$router.push({ name: "taskSummary" });
+        })
+        .catch((error) => {
+          console.log("login falhou", error);
+          this.snackbar.message = "Usuario ou senha invalida";
+          this.snackbar.show = true;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    saveLoggedUser(user) {
+      window.localStorage.setItem("loggedUser", user.id);
+      window.localStorage.setItem("loggedUserToken", user.token);
     },
   },
 };
