@@ -32,14 +32,19 @@
         </div>
       </div>
       <div class="add">
-        <a
-          class="btn-floating btn-large waves-effect waves-light red"
+        <v-btn
           @click="adicionar"
-          ><i class="fa-solid fa-plus"></i
-        ></a>
+          class="ma-2"
+          outlined
+          small
+          fab
+          color="indigo"
+        >
+          <i class="fa-solid fa-plus"></i>
+        </v-btn>
       </div>
     </div>
-    <footer class="page-footer orange darken-3">
+    <footer class="page-footer indigo darken-3">
       <div class="footer-copyright">
         <div class="container">© 2022</div>
       </div>
@@ -115,8 +120,7 @@ export default {
 </script>
 
 <style scoped>
-select {
-  display: inline;
-  margin-top: 35px;
+.container {
+  margin-top: 5rem;
 }
 </style>

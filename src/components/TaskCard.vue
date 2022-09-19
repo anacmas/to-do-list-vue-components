@@ -4,10 +4,14 @@
       <p>{{ title }}</p>
       <span class="projeto">{{ project }}</span>
     </div>
-    <div class="card-action">
-      <a href="#">This is a link</a>
-      <button @click="exclude(index)">Deletar</button>
-      <button @click="edit(index)">Editar</button>
+    <div class="text-center">
+      <v-btn @click="exclude(index)" class="ma-2" outlined color="indigo">
+        <i class="fa-solid fa-trash"></i>
+      </v-btn>
+
+      <v-btn @click="edit(index)" class="ma-2" outlined color="indigo">
+        <v-icon dark> mdi-pencil </v-icon>
+      </v-btn>
     </div>
   </div>
 </template>

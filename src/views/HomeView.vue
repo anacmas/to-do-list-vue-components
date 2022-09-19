@@ -31,7 +31,7 @@
             <v-btn
               :loading="loading"
               :disabled="!valid"
-              color="secondary"
+              color="indigo"
               class="mr-4"
               x-large
               block
