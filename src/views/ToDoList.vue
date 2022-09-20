@@ -1,5 +1,6 @@
 <template>
   <div id="index">
+    <FixedMenu />
     <nav class="orange darken-2">
       <div class="nav-wrapper"></div>
     </nav>
@@ -55,12 +56,14 @@
 <script>
 import TaskEdition from "../components/TaskEdition.vue";
 import TaskCard from "../components/TaskCard.vue";
+import FixedMenu from "../components/FixedMenu.vue";
 
 export default {
   name: "HelloWorld",
   components: {
     TaskCard,
     TaskEdition,
+    FixedMenu,
   },
   data: () => ({
     message: "Olá Vue!",
