@@ -1,55 +1,54 @@
 <template>
   <div id="index">
     <FixedMenu />
-    <nav class="orange darken-2">
-      <div class="nav-wrapper"></div>
-    </nav>
-    <div class="container">
-      <div class="section">
-        <!--   Icon Section   -->
-        <div class="row" v-show="!modoAdicionar">
-          <!-- card de tarefa que repete para cada item do array -->
-          <div
-            v-for="(task, index) in tasks"
-            :key="index"
-            class="card horizontal"
-          >
-            <TaskCard
-              :index="index"
-              :title="task.title"
-              :project="task.project"
-              :exclude="exclude"
-              :edit="edit"
+    <div>
+      <div class="container">
+        <div class="section">
+          <!--   Icon Section   -->
+          <div class="row" v-show="!modoAdicionar">
+            <!-- card de tarefa que repete para cada item do array -->
+            <div
+              v-for="(task, index) in tasks"
+              :key="index"
+              class="card horizontal"
+            >
+              <TaskCard
+                :index="index"
+                :title="task.title"
+                :project="task.project"
+                :exclude="exclude"
+                :edit="edit"
+              />
+            </div>
+          </div>
+          <!-- NOVA TAREFA -->
+          <div class="row" v-show="modoAdicionar">
+            <TaskEdition
+              :indexCard="indexCard"
+              :save="save"
+              :task="newTaskValue"
             />
           </div>
         </div>
-        <!-- NOVA TAREFA -->
-        <div class="row" v-show="modoAdicionar">
-          <TaskEdition
-            :indexCard="indexCard"
-            :save="save"
-            :task="newTaskValue"
-          />
+        <div class="add">
+          <v-btn
+            @click="adicionar"
+            class="ma-2"
+            outlined
+            small
+            fab
+            color="indigo"
+          >
+            <i class="fa-solid fa-plus"></i>
+          </v-btn>
         </div>
       </div>
-      <div class="add">
-        <v-btn
-          @click="adicionar"
-          class="ma-2"
-          outlined
-          small
-          fab
-          color="indigo"
-        >
-          <i class="fa-solid fa-plus"></i>
-        </v-btn>
-      </div>
+      <footer class="page-footer indigo darken-3">
+        <div class="footer-copyright">
+          <div class="container">© 2022</div>
+        </div>
+      </footer>
     </div>
-    <footer class="page-footer indigo darken-3">
-      <div class="footer-copyright">
-        <div class="container">© 2022</div>
-      </div>
-    </footer>
   </div>
 </template>
 
@@ -123,6 +122,11 @@ export default {
 </script>
 
 <style scoped>
+.index {
+  display: flex;
+  flex-direction: row;
+}
+
 .container {
   margin-top: 5rem;
 }

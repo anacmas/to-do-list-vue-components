@@ -12,7 +12,12 @@
         <v-divider></v-divider>
 
         <v-list dense nav>
-          <v-list-item v-for="item in items" :key="item.title" link>
+          <v-list-item
+            v-for="item in items"
+            :key="item.title"
+            link
+            @click="$vuetify.goTo(item.link)"
+          >
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
@@ -32,13 +37,22 @@ export default {
   data() {
     return {
       items: [
-        { title: "Tarefas", icon: "mdi-book-open-page-variant-outline" },
+        {
+          title: "Tarefas",
+          icon: "mdi-book-open-page-variant-outline",
+          link: "../views/ToDoList.vue",
+        },
         {
           title: "Painel - resumo",
           icon: "mdi-view-dashboard",
+          link: "/todolist",
         },
-        { title: "Tipos de tarefa", icon: "mdi-book-edit-outline" },
-        { title: "Sobre", icon: "mdi-help-box" },
+        {
+          title: "Tipos de tarefa",
+          icon: "mdi-book-edit-outline",
+          link: "/todolist",
+        },
+        { title: "Sobre", icon: "mdi-help-box", link: "/about" },
       ],
       right: null,
     };
